@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>V字形</title>
+	<style>
+		#box{
+			width: 500px;
+			height: 500px;
+			margin: 20px auto;
+			position: relative;
+		}
+		#box div{
+			width: 100px;
+			height: 100px;
+			line-height: 100px;
+			text-align: center;
+			font-size: 30px;
+			font-weight: bold;
+			background: red;
+			color: #fff;
+			position: absolute;
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var btn=document.getElementById('btn');
+			var box=document.getElementById('box');
+			var sboxs=box.getElementsByTagName('div');
+			var num=0;
+			var flag=true;
+			var pos1=[0,100,200,300,400];
+			var pos2=[0,100,200,100,0];
+			btn.onclick=function(){
+				if(flag) {createBox();
+				flag=false;}
+				switch(num){
+					case 0: setPos('left',pos1,'top',pos2);break;
+					case 1: setPos('right',pos2,'top',pos1);break;
+					case 2: setPos('left',pos1,'bottom',pos2);break;
+					case 3: setPos('left',pos2,'top',pos1);break;
+				}
+				num++;
+				if(num>3) num=0;
+			};
+
+			function setPos(xAttr,xPos,yAttr,yPos){
+				for(var i=0;i<5;i++){
+					sboxs[i].style.cssText='';
+					cssPos(sboxs[i],xAttr,xPos[i]);
+					cssPos(sboxs[i],yAttr,yPos[i]);
+				}
+			}
+			function cssPos(obj,attr,pos){
+				obj.style[attr]=pos+'px';
+			}
+
+			function createBox(){
+				for(var i=0;i<5;i++){
+					var sbox=document.createElement('div');
+					sbox.innerHTML=i;
+					box.appendChild(sbox);
+				}
+			}
+		};
+	</script>
+</head>
+<body>
+	<button id="btn" type="button">点击</button>
+	<div id="box"></div>
+</body>
+</html>

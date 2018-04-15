@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>切换画廊</title>
+	<style>
+		body,ul{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background: url(img/bg.jpg) no-repeat center fixed;
+			background-size: cover;
+		}
+		#box{
+			width: 500px;
+			height: 400px;
+			border: 1px solid #000;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -200px;
+			margin-left: -250px;
+		}
+		#box li{
+			list-style: none;
+		}
+		#box .img{
+			width: 500px;
+			height: 300px;
+			display: block;
+			border: none;
+		}
+		#cirs{
+			width: 110px;
+			height: 100px;
+			padding: 0 195px;
+			background: rgba(0,0,0,0.2);
+		}
+		#cirs li{
+			width: 10px;
+			height: 10px;
+			border-radius: 5px;
+			background: #ccc;
+			float: left;
+			margin:45px 15px 45px 0;
+			cursor: pointer;
+			position: relative;
+		}
+		#cirs li:last-child{
+			margin-right: 0;
+		}
+		#cirs .active{
+			background: orange;
+		}
+		#cirs li img{
+			width: 120px;
+			height: 80px;
+			display: block;
+			border: 5px solid #ccc;
+			position: absolute;
+			top :-100px;
+			left: -60px;
+			display: none;
+		}
+		#box .arrow{
+			width: 40px;
+			height: 40px;
+			background: rgba(0,0,0,0.3);
+			display: block;
+			position: absolute;
+			top:120px;
+			line-height: 40px;
+			text-align: center;
+			font-size: 30px;
+			font-weight: bold;
+			cursor: pointer;
+		}
+		#box .arrow:hover{
+			background: rgba(0,0,0,0.5);
+			color: #fff;
+		}
+		#left{
+			left: 0;
+		}
+		#right{
+			right: 0;
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var bImage=['img/lj1.jpg','img/lj2.jpg','img/lj3.jpg','img/lj4.jpg','img/lj5.jpg'];
+			var sImage=['img/slj1.jpg','img/slj2.jpg','img/slj3.jpg','img/slj4.jpg','img/slj5.jpg'];
+			var cirs=document.getElementById('cirs');
+			var aLis=cirs.getElementsByTagName('li');
+			var img=document.querySelector('#box .img');
+			var aImgs=cirs.getElementsByTagName('img');
+			var left=document.getElementById('left');
+			var right=document.getElementById('right');
+			var str='';
+			for(var i=0;i<sImage.length;i++){
+				str+='<li><img src="" /></li>';
+			}
+			cirs.innerHTML=str;
+			var num=0;
+			setImage();
+			for(var i=0;i<aLis.length;i++){
+				aLis[i].index=i;
+				aLis[i].onmouseover=function(){
+					initial();
+					this.className='active';
+					aImgs[this.index].src=sImage[this.index];
+					aImgs[this.index].style.display='block';
+				}
+				aLis[i].onmouseout=function(){
+					initial();
+					aLis[num].className='active';
+
+				}
+				aLis[i].onclick=function(){
+					num=this.index;
+					img.src=bImage[num];
+				}
+
+			}
+			function initial(){
+				for(var i=0;i<aLis.length;i++){
+					aLis[i].className='';
+					aImgs[i].style.display='none';
+				}
+			}
+
+			left.onclick=function(){
+				num--;
+				if(num<0) num=aLis.length-1;
+				setImage();
+			}
+
+			right.onclick=function(){
+				num++;
+				if(num>aLis.length-1) num=0;
+				setImage()
+			}
+			function setImage(){
+				img.src=bImage[num];
+				for(var i=0;i<aLis.length;i++){
+					aLis[i].className='';
+				}
+				aLis[num].className='active';
+			}
+
+		}
+	</script>
+</head>
+<body>
+	<div id="box">
+		<img src="" alt="" class="img">
+		<ul id="cirs"></ul>
+		<span id="left" class="arrow"><</span>
+		<span id="right" class="arrow">></span>
+	</div>
+</body>
+</html>

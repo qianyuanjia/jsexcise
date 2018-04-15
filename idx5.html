@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>自动生成100个box</title>
+	<style>
+		#contain div{
+			width: 60px;
+			height: 60px;
+			line-height: 60px;
+			text-align: center;
+			color: #fff;
+			font-size: 30px;
+			position: absolute;
+			border: 1px solid #000;
+		}
+		#contain{
+			position: relative;
+			width:675px;
+			height: 675px; 
+			margin: 20px auto;
+		}
+	</style>
+	<script>
+	window.onload=function(){
+		var btn=document.getElementById('btn');
+		var colors=['red','orange','yellow','green','blue','cyan','purple','navy'];
+		var contain=document.getElementById('contain');
+		var flag=true;
+		btn.onclick=function(){
+			var str='';
+			var j=0;
+			var left='';
+			var top='';
+			if(flag){
+				for(var i=0;i<100;i++){
+					j=i%colors.length;
+					left=5+67*(i%10)+'px';
+					top=5+67*Math.floor(i/10)+'px';
+					str+='<div style="background:'+colors[j]+';left:'+left+';top:'+top+'">'+i+'</div>';
+
+				}
+				contain.innerHTML=str;
+				flag=false;
+			}
+		}
+		
+	};
+	</script>
+</head>
+<body>
+	<button type="button" id="btn">自动生成100个box</button>
+	<div id="contain"></div>
+</body>
+</html>

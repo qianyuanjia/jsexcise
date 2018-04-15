@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>发短信</title>
+	<style>
+		body,p{
+			margin: 0;
+			padding: 0;
+		}
+		#phone{
+			width: 400px;
+			height: 700px;
+			border: 1px solid #000;
+			margin: 20px auto;
+			border-radius: 20px;
+			padding: 5px;
+			box-shadow: 2px 2px 3px 3px #ccc;
+		}
+		#screen{
+			width: 350px;
+			height:580px;
+			border: 2px solid #000;
+			margin: 30px auto;
+			border-radius: 2px;
+			position: relative;
+		}
+		#round{
+			width: 40px;
+			height: 40px;
+			border: 1px solid #000;
+			margin: 0 auto;
+			border-radius: 20px;
+		}
+		#bot{
+			width: 100%;
+			height: 50px;
+			background: #ddd;
+			bottom: 0;
+			position: absolute;
+		}
+		.emo{
+			display:inline-block;
+			width: 40px;
+			height: 40px;
+			float: left;
+			border: 1px solid #666;
+			margin:5px 15px;
+		}
+		#info{
+			width: 180px;
+			height:30px;
+			margin: 10px;
+			text-indent: 5px;
+			font-size: 20px;
+		}
+		#send{
+			padding: 3px 5px;
+			background: cyan;
+			color:#fff;
+			font-size: 20px;
+			border: none;
+			margin: 10px 0;
+		}
+		#show{
+			width: 100%;
+			height: 530px;
+			overflow:auto;
+		}
+		#show p{
+			height: 40px;
+			width: 100%;
+			line-height: 40px;
+			font-size: 20px;
+			color:#fff;
+			margin: 20px 0;
+		}
+		#show img{
+			margin: 0 10px;
+		}
+		#show p span{
+			display: inline-block;
+			height: 40px;
+			padding: 0 10px;
+			border-radius: 5px;
+			float: left;
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var emo=document.getElementById('emo');
+			var send=document.getElementById('send');
+			var info=document.getElementById('info');
+			var show=document.getElementById('show');
+			var emos=['img/emo1.jpg','img/emo2.jpg','img/emo3.jpg','img/emo4.jpg'];
+			var colors=['red','blue','yellow','green'];
+			var emoNum=0;
+			var left=true;
+			emo.onclick=function(){
+				emoNum++;
+				if(emoNum>emos.length-1) emoNum=0;
+				emo.src=emos[emoNum];
+				left=!left;
+			}
+
+			send.onclick=function(){
+				var msg=makeMsg();
+				sendMsg(msg);
+			}
+
+			function makeMsg(){
+				var msg='';
+				if(left){
+					msg='<p><img src="'+emos[emoNum]+'" class="emo"/><span style="background:'+colors[emoNum]+'">'+info.value+'</span></p>';
+				}else{
+					msg='<p><img style="float:right" src="'+emos[emoNum]+'" class="emo"/><span style="background:'+colors[emoNum]+';float:right">'+info.value+'</span></p>';
+				}
+				return msg;
+			}
+			function sendMsg(message){
+				show.innerHTML+=message;
+				info.value='';
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="phone">
+		<div id="screen">
+			<div id="show"></div>
+			<div id="bot">
+				<img src="img/emo1.jpg" id="emo" class="emo">
+				<input type="text" id="info">
+				<input type="button" value="发送" id="send">
+			</div>
+		</div>
+		<div id="round"></div>
+	</div>
+</body>
+</html>
