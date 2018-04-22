@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>自动切换</title>
+	<style>
+		body,h2,p{
+			margin:0;
+			padding: 0;
+		}
+		#box{
+			width: 500px;
+			height: 300px;
+			border: 5px solid #ccc;
+			margin: 100px auto;
+			position: relative;
+			overflow: hidden;
+		}
+		#imgs{
+			width: 2500px;
+			height: 300px;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		.image{
+			width: 500px;
+			height: 300px;
+			float: left;
+			/*display: block;*/
+		}
+		#banner{
+			width: 500px;
+			height: 60px;
+			background: rgba(0,0,0,0.9);
+			position: absolute;
+			bottom: 0;
+		}
+		#banner .title{
+			height: 20px;
+			width: 500px;
+			display: inline-block;
+			color: #fff;
+			font-weight: bold;
+			text-indent: 10px;
+			line-height: 20px;
+		}
+		#banner .info{
+			height: 40px;
+			width: 490px;
+			display: inline-block;
+			color: #fff;
+			padding-left: 10px;
+			font-size: 14px;
+		}
+		.hide{
+			display: none !important;
+		}
+	</style>
+	<script src="js/my.js"></script>
+	<script>
+		window.onload=function(){
+			var images=document.querySelectorAll('.image');
+			var titles=document.querySelectorAll('.title');
+			var infos=document.querySelectorAll('.info');
+			var imgFrame=getById('imgs');
+			var banner=getById('banner');
+			var idx=1;
+			imgFrame.appendChild(images[0].cloneNode(true));
+			autoPlay();
+
+			// doMove(imgFrame,'left',30,-500);
+			function autoPlay(){
+				setInterval(function(){
+					doMove(banner,'height',5,0,function(){		
+						doMove(imgFrame,'left',30,-500*idx,function(){
+							idx++;
+							if(idx==5){
+								idx=1;
+								imgFrame.style.left=0;
+							}
+							for(var i=0;i<titles.length;i++){
+								titles[i].className='title hide';
+								infos[i].className='info hide';
+							}
+							titles[idx-1].className='title';
+							infos[idx-1].className='info';
+							doMove(banner,'height',5,60);
+
+						});
+					});
+					
+				},3000);
+			}
+		};
+	</script>
+</head>
+<body>
+	<div id="box">
+		<div id="imgs">		
+			<img src="img/lj1.jpg" alt="" class="image">
+			<img src="img/lj2.jpg" alt="" class="image">
+			<img src="img/lj3.jpg" alt="" class="image">
+			<img src="img/lj4.jpg" alt="" class="image">
+		</div>
+		<div id="banner">
+			<span class="title">一拳超人1</span>
+			<span class="title hide">一拳超人2</span>
+			<span class="title hide">一拳超人3</span>
+			<span class="title hide">一拳超人4</span>
+			<span class="info">1、安宁，素有“十里桃乡”之美誉，这里历史文化厚重、自然风光雄奇、田园风情浓郁、城市风貌现代，自1984年起，兰州桃花旅游节已走过34个春天。</span>
+			<span class="info hide">2、近年来，安宁聚焦“桃文化”品牌形象打造、全域旅游创建、仁寿山景区建设等重点工作，综合施策，精准发力。</span>
+			<span class="info hide">3、本届兰州桃花旅游节，以“桃花深处·仁寿安宁”为主题。桃花节期间，将相继举办“丝路古道·天斧砂宫”徒步英雄大会。</span>
+			<span class="info hide">4、开幕式由上海荣光实业有限公司助力，歌星汪正正、星光大道歌手骆驼强子、西北笑星王海、女高音歌唱家王文婕等。</span>
+		</div>
+	</div>
+</body>
+</html>

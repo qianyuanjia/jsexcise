@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>判断QQ号</title>
+	<style>
+		#tip{
+			color: red;
+		}
+		.success{
+			color: green !important;
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var btn=document.getElementById('btn');
+			var qq=document.getElementById('qq');
+			var aP=document.getElementsByTagName('p');
+			var tip=document.getElementById('tip');
+			btn.onclick=function(){
+				var qqVal=qq.value;
+				if(qqVal==''){
+					tip.innerHTML=aP[0].innerHTML.substring(3);
+				}else if(isNaN(qqVal)){
+					tip.innerHTML=aP[1].innerHTML.slice(-4);
+				}else if(qqVal.charAt(0)=='0'){
+					tip.innerHTML=aP[2].innerHTML.substring(2);
+				}else if(parseInt(qqVal)!=parseFloat(qqVal)){
+					tip.innerHTML=aP[3].innerHTML.substring(2);
+				}else if(qqVal.length<5 || qqVal.length>=10){
+					tip.innerHTML=aP[4].innerHTML.substring(2);
+				}else{
+					tip.innerHTML='输入正确';
+					tip.className='success';
+				}
+			}
+		};
+	</script>
+</head>
+<body>
+	<span>请输入QQ号码：</span>
+	<input type="text" id="qq">
+	<input type="button" value="判断" id="btn">
+	<span id="tip">请输入正确的QQ号</span>
+	<p>1、有没有输入</p>
+	<p>2、输入的是不是数字</p>
+	<p>3、不能有0在前面</p>	
+	<p>4、不能是小数</p>
+	<p>5、输入的数字必须在5位以上、10位以内</p>
+			
+</body>
+</html>

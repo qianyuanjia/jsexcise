@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>淘宝商品广告效果</title>
+	<style>
+		body,ul{
+			margin: 0;
+			padding: 0;
+		}
+		#left{
+			position: absolute;
+			top:30px;
+			left: 20px;
+			width: 60px;
+			height: 330px;
+		}
+		#right{
+			position: absolute;
+			right: 20px;
+			top:30px;
+		}
+		li{
+			width: 40px;
+			height: 20px;
+			line-height: 20px;
+			font-size: 16px;
+			background: pink;
+			border: 1px solid #000;
+			margin: 40px 0;
+			padding: 5px;
+			list-style: none;
+			cursor: pointer;
+		}
+		#box{
+			height: 400px;
+			width: 600px;
+			border: 1px solid #333;
+			margin: 100px auto;
+			position: relative;
+		}
+		#img{
+			border: 1px solid #000;
+			position: absolute;
+			top: 10px;
+			left: 100px;
+			width: 400px;
+			height: 380px;
+		}
+		.active{
+			background: red;
+			color: #fff;
+		}
+		#img img{
+			width: 400px;
+			height: 380px; 
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var box=document.getElementById('box');
+			var aLis=box.getElementsByTagName('li');
+			var img=box.querySelector('#img img');
+			var imgURL=['img/cx1.jpg','img/cx2.jpg','img/cx3.jpg','img/cx4.jpg','img/p1.jpg','img/p2.jpg','img/p3.jpg','img/p4.jpg',];
+			var idx=0;
+			var timer=null;
+			var len=aLis.length;
+			var step=1;
+			//初始化
+			initial();
+			playFn();
+			img.onmouseover=function(){
+				clearInterval(timer);
+			}
+			img.onmouseout=function(){
+				playFn();
+			}
+			for(var i=0;i<len;i++){
+				aLis[i].index=i;
+				aLis[i].onmouseover=function(){
+					clearInterval(timer);
+					idx=this.index;
+					initial();
+				}
+				aLis[i].onmouseout=function(){
+					playFn();
+				}
+			}
+			function initial(){	
+				for(var i=0;i<len;i++){
+					aLis[i].className='';
+				}
+				aLis[idx].className='active';
+				img.src=imgURL[idx];
+			}
+
+			function playFn(){
+				timer=setInterval(autoPlay,2000);
+			}
+
+			function autoPlay(){
+				idx+=step;
+				if(idx==len-1 || idx==0) step*=-1;
+				initial();
+			}
+
+		};
+	</script>
+</head>
+<body>
+	<div id="box">		
+		<ul id="left">
+			<li class="active">吹雪1</li>
+			<li>吹雪2</li>
+			<li>吹雪3</li>
+			<li>吹雪4</li>
+		</ul>
+		<div id="img">
+			<img src="img/cx1.jpg" alt="">
+		</div>
+		<ul id="right">
+			<li>野良1</li>
+			<li>野良2</li>
+			<li>野良3</li>
+			<li>野良4</li>
+		</ul>
+	</div>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>编辑栏目</title>
+	<style>
+		body,ul{
+			margin: 0;
+			padding: 0;
+		}
+		#box{
+			width: 500px;
+			margin: 100px auto;
+		}
+		#box .title{
+			height: 40px;
+			background: green;
+			line-height: 40px;
+			font-size: 20px;
+			color: #fff;
+			text-indent: 15px;
+		}
+		#box li{
+			list-style: none;
+		}
+		#box .item{
+			border: 1px solid #0f0;
+			height: 30px;
+			line-height: 30px;
+			text-indent: 15px;
+		}
+		#box .text{
+			padding-right: 10px;
+			
+		}
+		
+		#box .edit{
+			position: relative;
+			top: 5px;
+		}
+		#box a{
+			text-decoration: none;
+			margin: 0 10px;
+			color: #333;
+		}
+		#box .right{
+			display: none;
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var box=document.getElementById('box');
+			var save=box.querySelectorAll('.save');
+			var cancel=box.querySelectorAll('.cancel');
+			var edit=box.querySelectorAll('.edit');
+			var left=box.querySelectorAll('.left');
+			var form=box.querySelectorAll('.form');
+			var right=box.querySelectorAll('.right');
+			var text=box.querySelectorAll('.text');
+			for(var i=0;i<left.length;i++){
+				edit[i].index=i;
+				edit[i].onclick=function(evt){
+					prevBubble(evt);
+					for(var i=0;i<left.length;i++){
+						toggleShow(i);
+					}
+					left[this.index].style.display='none';
+					right[this.index].style.display='block';
+					form[this.index].focus();
+					document.addEventListener('click',docClick,false);
+				}
+				save[i].index=i;
+				save[i].onclick=function(evt){
+					prevBubble(evt);
+					toggleShow(this.index);
+					text[this.index].innerHTML=form[this.index].value;
+					form[this.index].value='';
+					document.removeEventListener('click',docClick,false);
+				}
+				cancel[i].index=i;
+				cancel[i].onclick=function(evt){
+					prevBubble(evt);
+					toggleShow(this.index);
+					form[this.index].value='';
+					document.removeEventListener('click',docClick,false);
+				}
+				form[i].onclick=function(evt){
+					prevBubble(evt);
+				}
+			}
+			function docClick(){
+				for(var i=0;i<left.length;i++){
+					toggleShow(i);
+				}
+			}
+
+			function toggleShow(idx){
+				left[idx].style.display='block';
+				right[idx].style.display='none';
+			}
+			function prevBubble(evt){
+				var event=evt || window.event;
+				if(event.stopPropagation){
+					event.stopPropagation();
+				}else{
+					event.cancelBubble=true;
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<ul id="box">
+		<li class="title">分类名称</li>
+		<li class="item">
+			<span class="left">	
+				<span class="text">妙味远程课程</span><img src="img/smile.gif" class="edit">
+			</span>
+			<span class="right">
+				<input type="text" class="form"><a href="javascript:;" class="save">保存</a><a href="javascript:;" class="cancel">取消</a>
+			</span>
+		</li>
+		<li class="item">
+			<span class="left">	
+				<span class="text">妙味实体课程</span><img src="img/smile.gif" class="edit">
+			</span>
+			<span class="right">
+				<input type="text" class="form"><a href="javascript:;" class="save">保存</a><a href="javascript:;" class="cancel">取消</a>
+			</span>
+		</li>
+	</ul>
+</body>
+</html>

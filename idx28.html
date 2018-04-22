@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>计算器</title>
+	<style>
+		body,p{
+			margin: 0;
+			padding: 0;
+		}
+		html{
+			height: 100%;
+		}
+		body{
+			width: 100%;
+			height: 100%;
+			background: #666;
+		}
+		#box{
+			position: absolute;
+			width: 500px;
+			height: 600px;
+			background: #bbb;
+			border: 1px solid #f1f1f1;
+			top:50%;
+			left: 50%;
+			margin-left: -250px;
+			margin-top: -300px;
+			padding: 10px;
+		}
+		.top,.foot{
+			height: 40px;
+			line-height: 40px;
+		}
+		.left{
+			float: left;
+		}
+		.right{
+			float: right;
+		}
+		.show{
+			width: 490px;
+			height: 40px;
+			text-align: right;
+			padding-right: 10px;
+			font-size: 20px;
+			letter-spacing: 2px;
+		}
+		#btns{
+			width: 480px;
+			height: 380px;
+			border: 1px solid #f1f1f1;
+			margin: 30px 0;
+			padding:10px;
+			display: -webkit-box;
+			-webkit-box-orient:vertical;
+			-webkit-box-pack:justify;
+		}
+		.line{
+			height: 80px;
+			width: 100%;
+			display: -webkit-box;
+			-webkit-box-align:center;
+			-webkit-box-pack:justify;
+		}
+		#btns a{
+			text-decoration: none;
+			color: #000;
+			display: block;
+			width: 60px;
+			height: 50px;
+			background: #eee;
+			border-top:2px solid #f1f1f1;
+			border-left:2px solid #f1f1f1;
+			border-right: 2px solid #888;
+			border-bottom: 2px solid #888;
+			line-height: 50px;
+			text-align: center;
+			font-size: 20px;
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var oBtns=document.getElementById('btns');
+			var aA=oBtns.getElementsByTagName('a');
+			var oInp=document.getElementsByTagName('input')[0];
+			var len=aA.length;
+			for(var i=0;i<len-1;i++){
+				aA[i].onclick=function(){
+					oInp.value+=this.innerText;
+					oInp.focus();
+				}
+			}
+			aA[3].onclick=function(){
+				oInp.value=oInp.value.substring(0,oInp.value.length-1);
+				oInp.focus();
+			}
+			aA[4].onclick=function(){
+				oInp.value='';
+			}
+			aA[len-1].onclick=function(){
+				var val=oInp.value;
+				var res=0;
+				var typeArr=[];
+				var numArr=[];
+				var str='';
+				if(/^((\d+)(\.\d+)?[\+\-\*\/\%])+(\d+)(\.\d+)?$/.test(val)==false){
+					res=NaN;
+					oInp.value=res;
+					return;
+				}
+				for(var i=0;i<val.length;i++){
+					if(/[\D]/.test(val[i]) && val[i]!='.'){
+						typeArr.push(val[i]);
+						numArr.push(Number(str));
+						str='';
+					}else{
+						str+=val[i];
+					}
+					if(i==val.length-1) numArr.push(Number(str));
+				}
+				res=numArr[0];
+				for(var i=0;i<typeArr.length;i++){
+					res=calc(res,numArr[i+1],typeArr[i]);
+				}
+				oInp.value=res;
+			}
+
+		}
+		function calc(num1,num2,type){
+			if(type=='/' && num2==0){
+				return NaN;
+			}
+			return eval(num1+type+num2);
+		}
+	</script>
+</head>
+<body>
+	<div id="box">
+		<p class="top"><span class="left">计算器</span><span class="right">天璇地玑牌</span></p>
+		<input type="text" class="show">
+		<div id="btns">
+			<div class="line">
+				<a href="javascript:;">7</a>	
+				<a href="javascript:;">8</a>	
+				<a href="javascript:;">9</a>	
+				<a href="javascript:;">Back</a>	
+				<a href="javascript:;">C</a>	
+			</div>
+			<div class="line">
+				<a href="javascript:;">4</a>	
+				<a href="javascript:;">5</a>	
+				<a href="javascript:;">6</a>	
+				<a href="javascript:;">*</a>	
+				<a href="javascript:;">/</a>	
+			</div>
+			<div class="line">
+				<a href="javascript:;">1</a>	
+				<a href="javascript:;">2</a>	
+				<a href="javascript:;">3</a>	
+				<a href="javascript:;">+</a>	
+				<a href="javascript:;">-</a>	
+			</div>
+			<div class="line">
+				<a href="javascript:;">0</a>	
+				<a href="javascript:;">00</a>	
+				<a href="javascript:;">.</a>	
+				<a href="javascript:;">%</a>	
+				<a href="javascript:;">=</a>	
+			</div>
+		</div>
+		<p class="foot">欢迎使用javascript计算器</p>
+	</div>
+</body>
+</html>

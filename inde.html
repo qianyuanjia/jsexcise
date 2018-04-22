@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#box{
+			width: 100px;
+			height: 100px;
+			background: red;
+	
+		}
+	</style>
+	<script src='js/my.js'></script>
+	<script>
+		window.onload=function(){
+			var box=getById('box');
+			// drag(box);
+
+			box.onmousewheel=fn;
+			box.addEventListener('DOMMouseScroll',fn,false);
+			function fn(evt){
+				var evt=evt || event;
+				var b=true;
+				if(evt.wheelDelta){
+					b=evt.wheelDelta>0?true:false;
+				}else{
+					b=evt.detail>0?false:true;
+				}
+				if(b){
+
+					box.style.height =box.offsetHeight+10+'px';
+				}else{
+					box.style.height =box.offsetHeight-10+'px';
+				}
+				if(evt.preventDefault){
+					evt.preventDefault();
+				}
+				return false;
+			}
+		};
+	</script>
+</head>
+<body>
+
+<div id="box"></div>
+</body>
+</html>

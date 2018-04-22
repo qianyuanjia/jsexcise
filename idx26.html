@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>圆点渐隐动画</title>
+	<style>
+		body{
+			background: black;
+		}
+		#can{
+			background: white;
+		}
+	</style>
+	<script src="js/my.js"></script>
+	<script>
+		window.onload=function(){
+			cirAnimation('can',15,200,2,0.01);
+			// var oCan=document.getElementById('can');
+			// var oCtx=oCan.getContext('2d');
+			// var cirArr=[];
+			// //设置定时器用于生成圆点数组的信息
+			// setInterval(function(){
+			// 	var x=Math.floor(Math.random()*oCan.width);
+			// 	var y=Math.floor(Math.random()*oCan.height);
+			// 	var r=10;
+			// 	var R=Math.floor(Math.random()*256);
+			// 	var G=Math.floor(Math.random()*256);
+			// 	var B=Math.floor(Math.random()*256);
+			// 	var A=1;
+			// 	cirArr.push({
+			// 		x:x,
+			// 		y:y,
+			// 		r:r,
+			// 		R:R,
+			// 		G:G,
+			// 		B:B,
+			// 		A:A
+			// 	});
+			// },300);
+			// setInterval(function(){
+			// 	oCtx.clearRect(0,0,oCan.width,oCan.height);
+			// 	for(var i=0;i<cirArr.length;i++){				
+			// 		oCtx.beginPath();
+			// 		oCtx.fillStyle='rgba('+cirArr[i].R+','+cirArr[i].G+','+cirArr[i].B+','+cirArr[i].A+')';
+			// 		oCtx.moveTo(cirArr[i].x,cirArr[i].y);
+			// 		oCtx.arc(cirArr[i].x,cirArr[i].y,cirArr[i].r,0,2*Math.PI,false);
+			// 		oCtx.closePath();
+			// 		oCtx.fill();				
+			// 	}
+
+			// 	for(var i=0;i<cirArr.length;i++){
+			// 		cirArr[i].r+=2;
+			// 		cirArr[i].A-=0.01;
+			// 		if(cirArr[i].A<=0){
+			// 			cirArr.splice(i,1);
+			// 			// console.log(cirArr.length);
+			// 		}
+			// 	}
+			// },1000/60);
+		}
+	</script>
+</head>
+<body>
+	<canvas id="can" width="700" height="700"></canvas>
+</body>
+</html>

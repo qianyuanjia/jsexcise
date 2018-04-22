@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>自动轮换选项卡</title>
+	<style>
+		body,ul,h2,h3{
+			margin: 0;
+			padding: 0;
+		}
+		#box li{
+			list-style: none;
+		}
+		#box{
+			width: 500px;
+			height: 320px;
+			border: 1px solid #000;
+			padding: 10px;
+			margin: 100px auto;
+			position: relative;
+			background: #ccc;
+		}
+		#box .menu{
+			height: 40px;
+			float: left;
+			width: 100px;
+			text-align: center;
+			background: pink;
+			line-height: 40px;
+			border: 1px solid #333;
+
+		}
+		#box .menu_title,#box .pic_title{
+			font-weight: normal;
+			font-size: 16px;
+		}
+		#box .pics{
+			width: 400px;
+			height: 270px;
+			border: 1px solid #000;
+			float: left;
+			position: absolute;
+			top:50px;
+			left: 10px;
+			
+		}
+		
+		#box .inner{
+			width: 100px;
+			height: 40px;
+			position: absolute;
+			top: -1px;
+			left: 400px;			
+		}
+		#box .pic{
+			background: cyan;
+			border: 1px solid #000;	
+		}
+		
+		#box .image{
+			width: 400px;
+			height: 270px;
+			position: absolute;
+			top: 1px;
+			left: -400px;
+			display: block;
+		}
+		.hide{
+			display: none;
+		}
+		.menu_active{
+			background: red;
+			color: #fff;
+		}
+		.pic_active{
+			background: green;
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var box=document.getElementById('box');
+			var menu_titles=box.querySelectorAll('.menu_title');
+			var pic_titles=box.querySelectorAll('.pic_title');
+			var imgs=box.querySelectorAll('.image');
+			var pics=box.querySelectorAll('.pics');
+			var imgURL=['img/lj1.jpg','img/lj2.jpg','img/lj3.jpg','img/lj4.jpg','img/lj5.jpg','img/lj6.jpg'];
+			var menu_idx=0;
+			var img_idx=0;
+			var timer=null;
+			//初始化
+			initial();
+			function initial(){			
+				for(var i=0;i<pics.length;i++){
+					pics[i].style.display='none';
+					menu_titles[i].className='menu_title';
+				}
+				pics[menu_idx].style.display='block';
+				menu_titles[menu_idx].className='menu_title menu_active';
+				for(var j=0;j<pic_titles.length;j++){
+					pic_titles[j].className='pic_title';
+					imgs[j].style.display='none';
+				}
+				pic_titles[img_idx].className='pic_title pic_active';
+				imgs[img_idx].src=imgURL[img_idx];
+				imgs[img_idx].style.display='block';
+			}
+
+
+			setTimeout(playFn,2000);
+			function playFn(){
+				time=setInterval(autoPlay,2000);
+			}
+
+			function autoPlay(){
+				img_idx++;
+				if(img_idx>imgURL.length-1) img_idx=0;
+				menu_idx=Math.floor(img_idx/3);
+				initial();
+
+			}
+
+		};
+	</script>
+</head>
+<body>
+	<ul id="box">
+		<li class="menu">
+			<h2 class="menu_title  menu_active">菜单一</h2>
+			<ul class="pics">
+				<div class="inner">
+					<li class="pic">
+						<h3 class="pic_title pic_active">图片一</h3>
+						<img src="img/lj1.jpg" alt="" class="image">
+					</li>
+					<li class="pic">
+						<h3 class="pic_title">图片二</h3>
+						<img src="" alt="" class="image hide">
+					</li>
+					<li class="pic">
+						<h3 class="pic_title">图片三</h3>
+						<img src="" alt="" class="image hide">
+					</li>
+				</div>
+				
+			</ul>
+		</li>
+		<li class="menu">
+			<h2 class="menu_title">菜单二</h2>
+			<ul class="pics hide">
+				<div class="inner">
+					<li class="pic">
+						<h3 class="pic_title">图片四</h3>
+						<img src="" alt="" class="image">
+					</li>
+					<li class="pic">
+						<h3 class="pic_title">图片五</h3>
+						<img src="" alt="" class="image">
+					</li>
+					<li class="pic">
+						<h3 class="pic_title">图片六</h3>
+						<img src="" alt="" class="image">
+					</li>
+				</div>
+			</ul>
+		</li>
+	</ul>
+</body>
+</html>

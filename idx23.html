@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>渐隐函数封装</title>
+	<style>
+		#box{
+			width: 300px;
+			height: 100px;
+			margin:100px 0 0 20px;
+			background: red;
+		}
+	</style>
+	<script src="js/my.js"></script>
+	<script>
+	window.onload=function(){	
+		var box=getById('box');
+		var btns=getByTag(document,'input');
+		btns[0].onclick=function(){
+			doOpacity(box,8,0);
+		};
+		btns[1].onclick=function(){
+			doOpacity(box,8,100);
+		};
+	};
+	function doOpacity(obj,step,target,callback){
+		step=parseInt(getStyle(obj,'opacity')*100)<target?step:-step;
+		clearInterval(obj.opacity_timer);
+		var nextState=0;
+		obj.opacity_timer=setInterval(function(){
+			nextState=parseInt(getStyle(obj,'opacity')*100)+step;
+			if(nextState>target && step>0 || nextState<target && step<0){
+				nextState=target;
+			}
+			obj.style.opacity=nextState/100;
+			if(nextState==target){
+				clearInterval(obj.opacity_timer);
+				callback && callback();
+			}
+		},100);
+	}
+	</script>
+</head>
+<body>
+	<input type="button" value="隐藏">
+	<input type="button" value="显示">
+	<div id="box"></div>
+</body>
+</html>

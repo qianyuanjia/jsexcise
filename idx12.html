@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>搜狐列表展示</title>
+	<style>
+		body,ul,h2{
+			margin: 0;
+			padding: 0;
+		}
+		#box li{
+			list-style: none;
+			text-indent: 10px;
+			cursor: pointer;
+		}
+		#box{
+			width: 300px;
+			margin: 100px auto;
+			border: 1px solid #ccc;
+		
+		}
+		#box .title{
+			height: 40px;
+			background: pink;
+			line-height: 40px;
+			font-size: 20px;
+		}
+		#box .item{			
+			border-bottom: 1px solid #ccc;
+			
+			
+		}
+		#box .tip{
+			height: 30px;
+			background: green;
+			color: #fff;
+			line-height: 30px;
+			font-size: 16px;
+			font-weight: normal;
+
+		}
+		#box .show{
+			height: 80px;
+			background: gray;
+			font-size: 20px;
+			line-height: 80px;
+			text-align: center;
+			display: none;	
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var box=document.getElementById('box');
+			var items=box.querySelectorAll('.item');
+			var tips=box.querySelectorAll('.tip');
+			var shows=box.querySelectorAll('.show');
+			for(var i=0;i<items.length;i++){
+				items[i].index=i;
+				items[i].onmouseover=function(){
+					for(var i=0;i<items.length;i++){
+						tips[i].style.display='block';
+						shows[i].style.display='none';
+					}
+					tips[this.index].style.display='none';
+					shows[this.index].style.display='block';
+				}
+			}
+		};
+	</script>
+</head>
+<body>
+	<ul id="box">
+		<li class="title">观看排行榜</li>
+		<li class="item">
+			<h2 class="tip">火影忍者</h2>
+			<div class="show">一对好基友的日常。</div>
+		</li>
+		<li class="item">
+			<h2 class="tip">海贼王</h2>
+			<div class="show">一堆逗比的航海旅行。</div>
+		</li>
+		<li class="item">
+			<h2 class="tip">死神</h2>
+			<div class="show">一群日本鬼子打架的故事。</div>
+		</li>
+		<li class="item">
+			<h2 class="tip">七龙珠</h2>
+			<div class="show">外星人侵略地球。</div>
+		</li>
+	</ul>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>百度音乐全选</title>
+	<style>
+		body,ul{
+			margin: 0;
+			padding: 0;
+		}
+		#box{
+			width: 300px;
+			margin: 100px auto;
+			border: 1px solid #000;
+		}
+		#box li{
+			list-style: none;
+			height: 30px;
+			background: #F1F1F1;
+			border-bottom: 1px solid #fff;
+			line-height: 30px;
+			text-indent: 10px;
+		}
+	</style>
+	<script>
+	window.onload=function(){
+		var aInp=document.getElementsByTagName('input');
+		for(var i=0;i<aInp.length-1;i++){
+			aInp[i].onclick=function(){
+				for(var i=0;i<aInp.length-1;i++){
+					if(!aInp[i].checked){
+						break;
+					}
+				}
+				if(i==aInp.length-1){
+					aInp[aInp.length-1].checked=true;
+				}else{
+					aInp[aInp.length-1].checked=false;
+				}
+			}
+			
+		}
+		aInp[aInp.length-1].onclick=function(){
+			for(var i=0;i<aInp.length-1;i++){
+				aInp[i].checked=aInp[aInp.length-1].checked;
+			}
+		}
+	};
+		
+
+	</script>
+</head>
+<body>
+	<ul id="box">
+		<li><input type="checkbox">花火</li>
+		<li><input type="checkbox">你若成风</li>
+		<li><input type="checkbox">心疼你的过去</li>
+		<li><input type="checkbox">呼吸的痛</li>
+		<li><input type="checkbox">江南</li>
+		<li><input type="checkbox">全选</li>
+	</ul>
+</body>
+</html>

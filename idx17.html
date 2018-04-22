@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>自动切换选项卡</title>
+	<style>
+		body,ul{
+			margin: 0;padding: 0;
+		}
+		li{
+			list-style: none;
+		}
+		#box{
+			width: 500px;
+			height: 300px;
+			margin: 100px auto;
+			position: relative;
+			border: 1px solid #000;
+		}
+		#image{
+			width: 500px;
+			height: 300px;
+		}
+		#menus{
+			height: 40px;
+			background: pink;
+			position: absolute;
+			top:-41px;
+			left: -1px;
+			line-height: 40px;
+
+
+		}
+		#menus li{
+			float: left;
+			border: 1px solid #666;
+			width: 80px;
+			text-align: center;
+		}
+		#titles{
+			height: 40px;
+			position: absolute;
+			left: 500px;
+			top:-1px;
+			line-height: 40px;
+		}
+		#titles li{
+			border: 1px solid #666;
+			width: 80px;
+			text-align: center;
+			background: cyan;
+		}
+		#menus .menu_active{
+			background: red;
+			color: #fff;
+		}
+		#titles .title_active{
+			color: #fff;
+			background: navy;
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			
+			var imgURL=['img/lj1.jpg','img/lj2.jpg','img/lj3.jpg','img/lj4.jpg','img/lj5.jpg','img/lj6.jpg','img/a1.jpg','img/a2.jpg','img/a3.jpg'];
+			var pic_titles=['图片一','图片二','图片三','图片四','图片五','图片六','图片七','图片八','图片九'];
+			var menu_titles=['菜单一','菜单二','菜单三'];
+			changeTab(menu_titles,pic_titles,imgURL);
+			
+			
+		};
+
+		function changeTab(menu_titles,pic_titles,imgURL){
+			var aMenus=document.querySelectorAll('#menus li');
+			var aTitles=document.querySelectorAll('#titles li');
+			var img=document.getElementById('image');
+			var menu_idx=0;
+			var title_idx=0;
+			var timer=null;
+			//初始化
+			stateChange();
+			autoPlay();
+			//状态改变函数
+			function stateChange(){
+				for(var i=0;i<aMenus.length;i++){
+					aMenus[i].className='';
+					aMenus[i].innerHTML=menu_titles[i];
+				}
+				aMenus[menu_idx].className='menu_active';
+				for(var j=0;j<aTitles.length;j++){
+					aTitles[j].className='';
+					aTitles[j].innerHTML=pic_titles[menu_idx*3+j];
+				}
+				aTitles[title_idx%3].className='title_active';
+				img.src=imgURL[title_idx];
+			}
+
+			function autoPlay(){
+				timer=setInterval(function(){
+					title_idx++;
+					if(title_idx>pic_titles.length-1) title_idx=0;
+					menu_idx=Math.floor(title_idx/3);
+					stateChange();
+				},2000);
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="box">
+		<ul id="menus">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul id="titles">
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<img src="img/lj1.jpg" alt="" id="image">
+	</div>
+</body>
+</html>

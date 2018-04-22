@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>doMOve封装</title>
+	<style>
+		#box{
+			width: 60px;
+			height: 60px;
+			position: absolute;
+			top: 40px;
+			left: 10px;
+			background: red;
+		}
+	</style>
+	<script src='js/my.js'></script>
+	<script>
+		window.onload=function(){
+			var btn=getById('btn');
+			var box=getById('box');
+			var timer=null;
+			btn.onclick=function(){
+			doMove(box,'left',10,800,function(){
+				doMove(box,'height',8,500,function(){
+					doMove(box,'width',8,200);
+				});
+				});
+			// doMove(box,'left',10,800,function(){
+			// 	doMove(box,'left',10,200);
+			// });
+			}
+		};
+		
+	</script>
+</head>
+<body>
+	<input type="button" value="左右动" id="btn">
+	<div id="box"></div>
+</body>
+</html>

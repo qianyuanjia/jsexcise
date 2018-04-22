@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>让一排div往下掉</title>
+</head>
+<script src="js/my.js"></script>
+<script>
+	window.onload=function(){
+		var str='';
+		var timer=null;
+		var divs=getByTag(document,'div');
+		var idx=0;
+		var flag=true;
+		for(var i=0;i<20;i++){
+			str+='<div style="width:50px;height:50px;background:red;position:absolute;top:20px;left:'+(80+60*i)+'px'+'"></div>';
+		}
+		document.write(str);
+		document.onclick=function(){
+			clearInterval(timer);
+			timer=setInterval(function(){
+				if(idx>divs.length-1){
+					clearInterval(timer);
+					flag=false;
+					idx=divs.length-1;
+					return;
+				}else if(idx<0){
+					clearInterval(timer);
+					flag=true;
+					idx=0;
+					return;
+				}
+				if(flag){					
+					doMove(divs[idx],'top',30,600);
+					idx++;
+				}else{
+					doMove(divs[idx],'top',30,20);
+					idx--;
+				}
+
+			},100);
+		};
+	};
+</script>
+<body>
+	
+</body>
+</html>

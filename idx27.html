@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>无缝切换</title>
+	<style>
+		body,ul{
+			margin:0px;
+			padding: 0px;
+		}
+		#box li{
+			list-style: none;
+			width: 400px;
+			height: 200px;
+			background: red;
+			float: left;
+			border: 1px solid #000;
+			line-height: 200px;
+			text-align: center;
+			font-weight: bold;
+			font-size: 30px;
+		}
+		#box{
+			position: absolute;
+		}
+		#slide{
+			position: relative;
+			left: 200px;
+			top:50px;
+			overflow: hidden;
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var oSlide=document.getElementById('slide');
+			var aLi=document.getElementsByTagName('li');
+			var oBox=document.getElementById('box');
+			var oneSize={};
+			oneSize.width=aLi[0].offsetWidth;
+			oneSize.height=aLi[0].offsetHeight;
+			oSlide.style.width=oneSize.width+'px';
+			oSlide.style.height=oneSize.height+'px';
+			oBox.appendChild(aLi[0].cloneNode(true));
+			oBox.style.width=oneSize.width*aLi.length+'px';
+			var idx=0;
+			autoPlay();
+			function autoPlay(){
+				setInterval(function(){
+					
+					move(oBox,-oneSize.width*(idx+1),10,function(){
+						if(idx==aLi.length-1){
+							oBox.style.left='0px';
+							move(oBox,-oneSize.width,10);
+							idx=1;
+						}else{
+							idx++;
+						}
+					});
+					
+				},2000);
+			}
+		}
+
+		function move(obj,target,step,callback){
+			var nowLeft=box.offsetLeft;
+			step=nowLeft<target?step:-step;
+			obj.timer=setInterval(function(){
+					nowLeft=box.offsetLeft;
+					var nextLeft=nowLeft+step;
+					if(nextLeft>target && step>0 || nextLeft<nowLeft && step<0){
+						nextLeft=target;
+					}
+					box.style.left=nextLeft+'px';
+					if(nextLeft==target){
+						clearInterval(obj.timer);
+						callback && callback();
+					}
+				},30);
+		}
+	</script>
+</head>
+<body>
+<div id="slide">
+	<ul id="box">
+		<li>1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+		<li>5</li>
+	</ul>
+</div>
+</body>
+</html>

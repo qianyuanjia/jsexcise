@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>渐变组合动画</title>
+	<style>
+		#box{
+			margin: 0;
+			padding: 0;
+			width: 400px;
+			height: 40px;
+			border: 1px solid #000;
+			margin-top: 500px;
+			margin-left: 20px;
+			cursor: pointer;
+		}
+		li{
+			list-style: none;
+			width: 40px;
+			height: 40px;
+			line-height: 40px;
+			text-align: center;
+			font-size: 20px;
+			float: left;
+			position: relative;
+		}
+		#bot{
+			width: 0;
+			height: 40px;
+			background: cyan;
+			/*position: absolute;			*/
+		}
+	</style>
+	<script src="js/my.js"></script>
+	<script>
+		window.onload=function(){
+			var aLis=getByTag(document,'li');
+			var bot=getById('bot');
+			var box=getById('box');
+			var idx=0;
+			box.onclick=function(){	
+				doMove(bot,'width',10,400,function(){
+					doOpacity(bot,10,0);
+				});	
+
+				setMove();	
+				
+			// doMove(aLis[0],'top',20,-400);
+						
+			};
+
+			function setMove(){
+				setTimeout(function(){
+						doMove(aLis[idx],'top',30,-300);
+						doOpacity(aLis[idx],30,0);
+						idx++;
+						if(idx<aLis.length) setMove();
+					},20*idx+100);
+				
+			}
+		};
+	</script>
+</head>
+<body>
+	<ul id="box">
+		<li>+1</li>
+		<li>+1</li>
+		<li>+1</li>
+		<li>+1</li>
+		<li>+1</li>
+		<li>+1</li>
+		<li>+1</li>
+		<li>+1</li>
+		<li>+1</li>
+		<li>+1</li>
+		<div id="bot"></div>
+	</ul>
+</body>
+</html>

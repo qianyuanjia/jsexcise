@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>按钮控制商品上下滚动</title>
+	<style>
+		body,ul,h2{
+			margin: 0;
+			padding: 0;
+		}
+		#box{
+			width: 200px;
+			height: 490px;
+			margin: 100px auto;
+			background: #f1f1f1;
+			padding: 10px;
+			position: relative;
+		}
+		#box h2{
+			height: 30px;
+			line-height: 30px;
+			font-weight: normal;
+			font-size: 14px;
+			background: #425A7B;
+			border-top-left-radius: 6px;
+			border-top-right-radius:6px;
+			color: #fff;
+			text-indent: 10px; 
+
+		}
+		#btn1,#btn2{
+			height: 30px;
+			background: #ccc;
+			cursor: pointer;
+		}
+		#show{
+			/*background: red;*/
+			height:400px;
+			width: 200px;
+			overflow: hidden;
+			position: relative; 
+		}
+		#list{
+			position: absolute;
+			height: 400px;
+			width: 200px;
+			/*top:-400px;*/
+		}
+		#list li{
+			list-style: none;
+			height: 99px;
+			border-bottom: 1px solid #fff;
+		}
+		#btn2{
+			position:absolute;
+			bottom: 10px;
+			width: 200px;
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var btn1=document.getElementById('btn1');
+			var btn2=document.getElementById('btn2');
+			var aLis=document.getElementsByTagName('li');
+			var colors=['red','orange','yellow','green','cyan','blue','purple','maroon'];
+			var list=document.getElementById('list');
+			var timer=null;
+			for(var i=0;i<aLis.length;i++){
+				aLis[i].style.background=colors[i];
+			}
+			btn1.onmousedown=function(){
+				downFn(-400,-1);
+			}
+
+			btn2.onmousedown=function(){
+				downFn(0,1);
+			}
+			btn1.onmouseup=function(){
+				clearInterval(timer);
+			}
+			btn2.onmouseup=function(){
+				clearInterval(timer);
+			}
+			function downFn(end,flag){
+				clearInterval(timer);
+				timer=setInterval(function(){
+					if(Math.abs(list.offsetTop-end)<=10){
+						clearInterval(timer);
+						list.style.top=end+'px';
+					}else{	
+						list.style.top=list.offsetTop+10*flag+'px';
+						// console.log(2);
+					}
+				},100);
+			}
+		};
+	</script>
+</head>
+<body>
+	<div id="box">
+		<h2>妙味课堂</h2>
+		<div id="btn1"></div>
+		<div id="show">		
+			<ul id="list">
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+		<div id="btn2"></div>
+	</div>
+</body>
+</html>

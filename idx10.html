@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>商城切换</title>
+	<style>
+		body,ul,h2{
+			margin: 0;
+			padding: 0;
+		}
+		#box{
+			width: 600px;
+			height: 300px;
+			border: 1px solid #000;
+			margin: 100px auto;
+			position: relative;
+		}
+		#box li{
+			list-style: none;
+		}
+		#box .list{
+			width: 100px;
+			height: 100px;
+			background: #ccc;
+			cursor: pointer;
+		}
+		#box .title{
+			text-align: center;
+			font-size: 20px;
+			font-weight: normal;
+			height: 100px;
+			line-height: 100px;
+			border: 1px solid #000;
+		}
+		#box .pics{
+			width: 500px;
+			height: 300px;
+			position: absolute;
+			left: 100px;
+			top: 0;
+			display: none;
+		}
+		#box .image{
+			width: 500px;
+			height: 300px;
+			display: block;
+		}
+		#box .fbox{
+			width: 100%;
+			height: 30px;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			display: flex;
+		}
+		#box .pics li{
+			flex: 1;
+			background: pink;
+			line-height: 30px;
+			text-align: center;
+			font-size: 20px;
+			border-right: 1px solid #fff;
+			cursor: pointer;
+		}
+		#box .now,#box .active{
+			background: red !important;
+			color: #fff !important;
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var box=document.getElementById('box');
+			var aLeft=box.querySelectorAll('.list');
+			var fbox=box.querySelectorAll('.fbox');
+			var aPics=box.querySelectorAll('.pics');
+			var image=box.querySelectorAll('.image');
+			var letters=['a','b','c'];
+
+			for(var i=0;i<aLeft.length;i++){
+				aLeft[i].index=i;
+				aLeft[i].onmouseover=aLeftOver;
+				setImage(aLeft[i],fbox[i].children.length,i);
+				for(var j=0;j<fbox[i].children.length;j++){
+					fbox[i].children[j].lIndex=i;
+					fbox[i].children[j].bIndex=j;
+					fbox[i].children[j].onmouseover=tabOver;
+				}
+			}
+			//初始化
+			initial(0,0);
+			
+			function initial(lIdx,bIdx){
+				for(var i=0;i<aLeft.length;i++){
+					aLeft[i].className='list';
+					aPics[i].style.display='none';
+					for(var j=0;j<fbox[i].children.length;j++){
+						fbox[i].children[j].index=i;
+						fbox[i].children[j].className='';
+					}
+				}
+				aLeft[lIdx].className='list now';
+				aPics[lIdx].style.display='block';
+				fbox[lIdx].children[bIdx].className='active';
+				image[lIdx].src=aLeft[lIdx].imgs[bIdx];
+			}
+			function tabOver(evt){
+				var event=evt || window.event;
+				if(event.stopPropagation){
+					event.stopPropagation();					
+				}else{
+					event.cancelBubble=true;
+				}
+				for(var k=0;k<fbox[this.lIndex].children.length;k++){
+					fbox[this.lIndex].children[k].className='';
+				}
+				this.className='active';
+				image[this.lIndex].src=aLeft[this.lIndex].imgs[this.bIndex];
+
+				
+			}
+			function setImage(obj,num,idx){
+				obj.imgs=[];
+				for(var i=0;i<num;i++){
+					obj.imgs.push('shop/'+letters[idx]+(i+1)+'.jpg');
+				}
+			}
+			function aLeftOver(){
+				initial(this.index,0);
+			}
+		};
+
+	</script>
+</head>
+<body>
+	<ul id="box">
+		<li class="list">
+			<h2 class="title">最热团购</h2>
+			<ul class="pics">
+				<img src="" alt="" class="image">
+				<div class="fbox">
+					<li>a1</li>
+					<li>a2</li>
+					<li>a3</li>
+				</div>
+			</ul>
+		</li>
+
+		<li class="list">
+			<h2 class="title">商城特惠</h2>
+			<ul class="pics">
+				<img src="" alt="" class="image">
+				<div class="fbox">
+					<li>b1</li>
+					<li>b2</li>
+					<li>b3</li>
+					<li>b4</li>
+				</div>
+			</ul>
+		</li>
+
+		<li class="list">
+			<h2 class="title">名品推荐</h2>
+			<ul class="pics">
+				<img src="" alt="" class="image">
+				<div class="fbox">
+					<li>c1</li>
+					<li>c2</li>
+					<li>c3</li>
+					<li>c4</li>
+				</div>
+			</ul>
+		</li>
+		
+	</ul>
+
+</body>
+</html>

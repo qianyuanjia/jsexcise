@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>延迟消失的菜单</title>
+	<style>
+		body,ul{
+			margin: 0;padding: 0;
+		}
+		li{
+			list-style: none;
+		}
+		#div1{
+			width: 520px;
+			height: 36px;
+			margin: 100px auto;
+			background: url(img/nav_bg.png) no-repeat;
+		}
+		#div2{
+			width: 520px;
+			height: 36px;
+			background: url(img/nav_bg.png) no-repeat right -36px;
+		}
+		#nav{
+			width: 500px;
+			height: 36px;
+			margin: 0 auto;
+			background: url(img/nav_bg.png) 5px -72px;
+			line-height: 36px;
+			padding-left: 10px
+		}
+		a{
+			text-decoration:none;
+		}
+		#nav li{
+			display: inline-block;
+			width: 70px;
+			height: 30px;
+			padding:0 10px;
+			line-height: 30px;
+			text-align: center;
+			background: url(img/nav_divide.png) no-repeat right
+			center;
+		}
+		#nav a{
+			color: #fff;
+			font-size: 12px;
+
+		}
+		#nav a:hover{
+			background: rgba(255,255,255,0.2);
+			padding: 4px 10px;
+			border-radius: 4px;
+		}
+		#nav .more{
+			margin-left: 40px;
+			background: none;
+		}
+
+		
+		#bot_div1,#bot_div2{
+			width: 300px;
+			height: 27px;
+		}
+		#bot_div1{
+			background:url(img/nav_bg.png) no-repeat 0 -108px;
+			position: relative;
+			display: none;
+			position: absolute;
+			top:145px;
+		}
+		#bot_div2{
+			background:url(img/nav_bg.png) no-repeat right -135px;
+		}
+		
+		#but{
+			position: absolute;
+			top: -5px;
+			z-index: 1;
+		}
+		#bot{
+			width: 274px;
+			height: 27px;
+			margin:0 auto;
+			background:url(img/nav_bg.png) 0 -162px;
+			line-height: 27px;
+			padding-left: 16px;
+		}
+		#bot li{
+			display: inline-block;
+			width: 60px;
+			height: 14px;
+			line-height: 14px;
+			text-align: center;
+			border-right: 1px solid #aaa;
+		}
+		#bot a{
+			color: blue;
+			font-size: 10px;
+			font-weight: bold;
+			
+		}
+		#bot a:hover{
+			text-decoration: underline;
+		}
+		#bot li:last-child{
+			border: none;
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var nav=document.getElementById('nav');
+			var nav_a=nav.getElementsByTagName('a');
+			var nav_bot=document.getElementById('bot_div1');
+			var but=document.getElementById('but');
+			var timer=null;
+			for(var i=0;i<nav_a.length;i++){
+				nav_a[i].index=i;
+				nav_a[i].onmouseover=function(){
+					clearTimeout(timer);
+					switch(this.index){
+						case 0: stateChange(36,480);break;
+						case 1: stateChange(106,500);break;
+						case 2: stateChange(170,526);break;
+						case 3: stateChange(230,554);break; 
+						case 4: nav_bot.style.display='none';
+								return;
+					}
+					nav_bot.style.display='block';
+				}
+				nav_a[i].onmouseout=function(){
+					timer=setTimeout(function(){
+						nav_bot.style.display='none';
+					},500);
+				}
+			}
+			nav_bot.onmouseover=function(){
+				clearTimeout(timer);
+			}
+			nav_bot.onmouseout=function(){
+				timer=setTimeout(function(){
+						nav_bot.style.display='none';
+					},500);
+			}
+			function stateChange(but_left,nav_left){
+				but.style.left=but_left+'px';
+				nav_bot.style.left=nav_left+'px';
+			}
+		};
+	</script>
+</head>
+<body>
+	<div id="div1">
+		<div id="div2">			
+			<ul id="nav">
+				<li><a href="#">首页</a></li><li><a href="#">关于我们</a></li><li><a href="#">作品</a></li><li><a href="#">博客</a></li><li class="more"><a href="#">>>更多</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="bot_div1">
+		<img src="img/nav_but.gif" alt="" id="but">
+		<div id="bot_div2">				
+			<ul id="bot">
+				<li><a href="#">js特效</a></li><li><a href="#">html基础</a></li><li><a href="#">css样式</a></li><li><a href="#">php教程</a></li>
+			</ul>
+		</div>
+	</div>	
+
+</body>
+</html>
