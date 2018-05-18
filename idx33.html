@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>HTML5拖拽</title>
+	<style>
+		#list{
+			margin:50px 20px;
+			padding:0;
+			width: 200px;
+
+		}
+		#list li{
+			list-style: none;
+			height: 100px;
+			background: red;
+			margin-bottom: 10px;
+		}
+		#box{
+			width: 300px;
+			height: 200px;
+			background: green;
+			position: absolute;
+			right: 100px;
+			top: 200px;
+
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var oList=document.getElementById('list');
+			var aLi=oList.getElementsByTagName('li');
+			var oBox=document.getElementById('box');
+			for(var i=0;i<aLi.length;i++){
+				aLi[i].index=i;
+				aLi[i].ondragstart=function(ev){
+					var ev=ev || event;
+					ev.dataTransfer.setData('idx',this.index);
+					// ev.dataTransfer.effectAllowed='link';
+					this.style.background='yellow';
+				}
+				aLi[i].ondragend=function(ev){
+					var ev=ev || event;
+					this.style.background='blue';
+				}
+			}
+			oBox.ondragover=function(ev){
+				var ev=ev || event;
+				ev.preventDefault();
+			}
+			oBox.ondrop=function(ev){
+				var ev=ev || event;
+				alert(ev.dataTransfer.getData('idx'));
+			}
+		}
+	</script>
+</head>
+<body>
+	<ul id="list">
+		<li draggable="true"></li>
+		<li draggable="true"></li>
+		<li draggable="true"></li>
+		<li draggable="true"></li>
+	</ul>
+	<div id="box"></div>
+</body>
+</html>

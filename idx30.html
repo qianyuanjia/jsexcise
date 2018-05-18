@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>3d正方体</title>
+	<style>
+		#box{	
+			width:300px;
+			height: 300px;
+			border: 1px solid #000;
+			margin:100px auto;
+			perspective: 200px;
+		}
+		#square{
+			height:300px;
+			position: relative;
+			transform-style: preserve-3d;
+			transform-origin: center center -50px; 
+			transition: 3s;
+		}
+		#square div{
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			line-height: 100px;
+			text-align: center;
+			font-size: 30px;
+			font-weight: bold;
+			color: #fff;
+		}
+		#square div:nth-child(1){
+			background: red;
+			left: 100px;
+			top: 0;
+			transform-origin: bottom;
+			transform:rotateX(90deg);
+		}
+		#square div:nth-child(2){
+			background: orange;
+			left: 0;
+			top:100px;
+			transform-origin: right;
+			transform:rotateY(-90deg);
+		}
+		#square div:nth-child(3){
+			background: yellow;
+			left: 100px;
+			top: 200px;
+			transform-origin: top;
+			transform:rotateX(-90deg);
+		}
+		#square div:nth-child(4){
+			background: green;
+			left: 200px;
+			top:100px;
+			transform-origin: left;
+			transform:rotateY(90deg);
+		}
+		#square div:nth-child(5){
+			background: cyan;
+			left: 100px;
+			top:100px;
+			transform: translateZ(-100px) rotateX(180deg);
+		}
+		#square div:nth-child(6){
+			background: blue;
+			left: 100px;
+			top:100px;
+		}
+		#box:hover #square{
+			transform: rotateX(180deg);
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<div id="square">
+			<div>1</div>
+			<div>2</div>
+			<div>3</div>
+			<div>4</div>
+			<div>5</div>
+			<div>6</div>	
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>钟表效果</title>
+	<style id="css">
+		body,ul{
+			margin: 0;
+			padding:0;
+		}
+		#box{
+			width: 200px;
+			height: 200px;
+			border: 2px solid #000;
+			border-radius: 50%;
+			margin:100px auto;
+			position: relative;
+		}
+		#tick{
+			list-style: none;
+			height: 200px;
+			position: absolute;
+		}
+		#tick li{
+			width: 2px;
+			height: 6px;
+			position: absolute;
+			left: 99px;
+			top: 0;
+			background: #000;
+			-webkit-transform-origin:center 100px;
+			transform-origin:center 100px;
+		}
+		#tick li:nth-child(5n+1){
+			height: 10px;
+			width: 4px;
+		}
+		#hour{
+			width: 6px;
+			height: 30px;
+			background: blue;
+			position: absolute;
+			left: 97px;
+			top: 70px;
+		}
+		#min{
+			width:4px;
+			height: 50px;
+			background: green;
+			position: absolute;
+			left: 98px;
+			top: 50px;
+		}
+		#sec{
+			width: 2px;
+			height: 65px;
+			background: red;
+			position: absolute;
+			left: 99px;
+			top: 35px;
+		}
+		#hour,#sec,#min{
+			-webkit-transform-origin:bottom;
+			transform-origin:bottom;
+		}
+		#cir{
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			background: #000;
+			position: absolute;
+			left: 95px;
+			top: 95px;
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var oTick=document.getElementById('tick');
+			var oCss=document.getElementById('css');
+			var oSec=document.getElementById('sec');
+			var oMin=document.getElementById('min');
+			var oHour=document.getElementById('hour');
+			var str='';
+			for(var i=0;i<60;i++){
+				str+='<li></li>';
+				oCss.innerHTML+='#tick li:nth-child('+(i+1)+'){-webkit-transform:rotate('+i*6+'deg);}#tick li:nth-child('+(i+1)+'){transform:rotate('+i*6+'deg);}';
+			}
+			oTick.innerHTML=str;
+			setTime();
+			setInterval(function(){
+				setTime();				
+			},1000);
+			function setTime(){
+				var iDate=new Date();
+				var iSecs=iDate.getSeconds();
+				var iMins=iDate.getMinutes()+iSecs/60;
+				var iHours=iDate.getHours()+iMins/60;
+				oSec.style.WebkitTransform='rotate('+iSecs*6+'deg)';
+				oMin.style.WebkitTransform='rotate('+iMins*6+'deg)';
+				oHour.style.WebkitTransform='rotate('+iHours*30+'deg)';
+
+				oSec.style.transform='rotate('+iSecs*6+'deg)';
+				oMin.style.transform='rotate('+iMins*6+'deg)';
+				oHour.style.transform='rotate('+iHours*30+'deg)';
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="box">
+		<ul id="tick"></ul>
+		<div id="hour"></div>
+		<div id="min"></div>
+		<div id="sec"></div>
+		<div id="cir"></div>
+	</div>
+</body>
+</html>

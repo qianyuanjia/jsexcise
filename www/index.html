@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta  name="viewport" content="width=device-width,initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>移动端开发</title>
+	<link rel="stylesheet" type="text/css" href="jquery.mobile-1.4.5.min.css" />
+	<script src="jquery-1.11.1.min.js"></script>
+	<script src="jquery.mobile-1.4.5.min.js"></script>
+	<style>
+		div[role=main]{
+			overflow-y: auto;
+			height: 594px;
+		}
+	</style>
+</head>
+<body>
+	<div data-role="page" data-position="fixed" id="page1">
+		<div data-role="header">
+			<h1>这是头部</h1>
+		</div>
+		<div role="main">
+			<a href="#page2" data-transition="turn">跳转到第二页</a>
+			<p>这是主体内容一</p>
+			<p>这是主体内容一</p>
+			<p>这是主体内容一</p>
+			<p>这是主体内容一</p>
+			<p>这是主体内容一</p>
+			<p>这是主体内容一</p>
+			<p>这是主体内容一</p>
+			<p>这是主体内容一</p>
+		</div>
+		<div data-role="footer" data-position="fixed">
+			<h4>这是尾部</h4>
+		</div>
+	</div>
+	
+		<div data-role="page" data-position="fixed" id="page2">
+		<div data-role="header">
+			<h1>这是头部</h1>
+		</div>
+		<div role="main">
+			<a href="#page1" data-transition="turn">跳转到第一页</a>
+			<p>这是主体内容二</p>
+			<p>这是主体内容二</p>
+			<p>这是主体内容二</p>
+			<p>这是主体内容二</p>
+			<p>这是主体内容二</p>
+			<p>这是主体内容二</p>
+			<p>这是主体内容二</p>
+			<p>这是主体内容二</p>
+			<p>这是主体内容二</p>
+			<p>这是主体内容二</p>
+			<p>这是主体内容二</p>
+			<p>这是主体内容二</p>
+		</div>
+		<div data-role="footer" data-position="fixed">
+			<h4>这是尾部</h4>
+		</div>
+	</div>
+</body>
+</html>

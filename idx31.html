@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>立体旋转幻灯片</title>
+	<style id="css">
+		body,ul{
+			margin:0;
+			padding:0;
+		}
+		#box{
+			width: 800px;
+			height: 400px;
+			margin:100px auto;
+			perspective: 500px;
+		}
+		#frame{
+			width: 800px;
+			height: 360px;
+			
+		}
+		#frame li{
+			list-style: none;
+			width: 20px;
+			height: 360px;
+			transform-style: preserve-3d;
+			position: relative;
+			float: left;
+			transform-origin: center center -180px;
+		}
+		#frame span{
+			display: block;
+			width: 20px;
+			height: 360px;
+			position: absolute;
+		}
+		#frame i{
+			display: block;
+			width: 360px;
+			height: 360px;
+			position: absolute;
+			background: #333;
+		}
+		#frame li span:nth-of-type(1){
+			background: url(slide/meinv1.jpg);
+		}
+		#frame li span:nth-of-type(2){
+			background: url(slide/meinv2.jpg);
+			top:-360px;
+			transform-origin: bottom;
+			transform: rotateX(90deg);
+		}
+		#frame li span:nth-of-type(3){
+			background: url(slide/meinv3.jpg);
+			transform: translateZ(-360px) rotateX(180deg);
+			/*要求是上下颠倒，因而是rotateX
+			rotate是上下颠倒，左右也颠倒。并且rotate必须在translateZ之后，先执行。
+			*/
+		}
+		#frame li span:nth-of-type(4){
+			background: url(slide/meinv4.jpg);
+			top:360px;
+			transform-origin: top;
+			transform:rotateX(-90deg);
+		}
+		#frame li i:nth-of-type(1){
+			left: -360px;
+			transform-origin: right;
+			transform: rotateY(-90deg);
+		}
+		#frame li i:nth-of-type(2){
+			left: 20px;
+			transform-origin: left;
+			transform: rotateY(90deg);
+		}
+
+
+		#btns{
+			width: 170px;
+			height: 20px;
+			padding-left: 630px;
+			margin-top: 10px;
+		}
+		#btns li{
+			list-style: none;
+			float: left;
+			width: 20px;
+			height: 20px;
+			background: #333;
+			border-radius: 50%;
+			line-height: 20px;
+			text-align: center;
+			color: #fff;
+			margin-right: 20px;
+			cursor: pointer;
+		}
+		#btns .active{
+			background: orange;
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var oFrame=document.getElementById('frame');
+			var oCss=document.getElementById('css');
+			var oBtns=document.getElementById('btns');
+			var aLiBtn=oBtns.getElementsByTagName('li');
+			var aLiFrame=oFrame.getElementsByTagName('li');
+			var liWidth=20;
+			var liCount=oFrame.clientWidth/20;
+			var str='';
+			var cssStr='';
+			var zIndex=0;
+			for(var i=0;i<liCount;i++){
+				i>liCount/2?zIndex--:zIndex++;
+				str+='<li><span></span><span></span><span></span><span></span><i></i><i></i></li>';
+				cssStr+='#frame li:nth-child('+(i+1)+') span{background-position:-'+i*liWidth+'px 0;}';
+				cssStr+='#frame li:nth-child('+(i+1)+'){z-index:'+zIndex+'}';
+			}
+			oCss.innerHTML+=cssStr;
+			oFrame.innerHTML=str;
+
+			for(var i=0;i<aLiBtn.length;i++){
+				(function(a){
+					aLiBtn[a].onclick=function(){
+						for(var j=0;j<aLiBtn.length;j++){
+							aLiBtn[j].className='';
+						}
+						for(var i=0;i<liCount;i++){
+							aLiFrame[i].style.transition='0.5s '+i*20+'ms';
+							aLiFrame[i].style.transform='rotateX(-'+a*90+'deg)';
+						}
+						this.className='active';
+					}
+				})(i);
+			}			
+		}
+	</script>
+</head>
+<body>
+	<div id="box">
+		<ul id="frame"></ul>
+		<ul id="btns">
+			<li class="active">1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+		</ul>
+	</div>
+</body>
+</html>

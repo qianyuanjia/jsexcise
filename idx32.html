@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>CSS3折纸效果</title>
+	<style>
+		body,h2{
+			margin: 0px;
+			padding:0px;
+		}
+		#box{
+			width: 200px;
+			margin:30px auto;
+			position: relative;
+			perspective: 800px;
+		}
+		#box h2{
+			height: 34px;
+			line-height: 34px;
+			font-size: 16px;
+			background: orange;
+			text-indent: 10px;
+			position: relative;
+			z-index: 10;
+		}
+		#box div{
+			position: absolute;
+			top: 32px;
+			width: 100%;
+			transform-style: preserve-3d;
+			transform-origin: top;
+			transform: rotateX(-120deg);
+		}
+		#box>div{
+			top: 34px;	
+		}
+		#box span{
+			height: 30px;
+			background: lightgreen;
+			color: #fff;
+			font-size: 14px;
+			display: block;
+			line-height: 30px;
+			text-indent: 10px;
+		}
+		@keyframes show{
+			0%{
+				transform: rotateX(-120deg);
+			}
+			10%{
+				transform: rotateX(-60deg);
+			}
+			20%{
+				transform: rotateX(-45deg);
+			}
+			30%{
+				transform: rotateX(-30deg);
+			}
+			40%{
+				transform: rotateX(25deg);
+			}
+			50%{
+				transform: rotateX(-20deg);
+			}
+			60%{
+				transform: rotateX(16deg);
+			}
+			70%{
+				transform: rotateX(-10deg);
+			}
+			80%{
+				transform: rotateX(6deg);
+			}
+			90%{
+				transform: rotateX(-3deg);
+			}
+			100%{
+				transform: rotateX(0deg);
+			}
+		}
+		@keyframes hide{
+			0%{
+				transform: rotateX(0deg);
+			}
+			
+			20%{
+				transform: rotateX(-10deg);
+			}
+			
+			40%{
+				transform: rotateX(-30deg);
+			}
+			60%{
+				transform: rotateX(-40deg);
+			}
+			
+			80%{
+				transform: rotateX(-60deg);
+			}
+			
+			100%{
+				transform: rotateX(-120deg);
+			}
+		}
+		@keyframes color{
+			0%{
+				box-shadow: inset 0 0 0 100px rgba(0,0,0,0.6);
+			}
+			100%{
+				box-shadow: inset 0 0 0 100px rgba(0,0,0,0);
+			}
+		}
+		#box .show{
+			animation: 2s show;
+			transform:rotateX(0deg);
+		}
+		#box .show span{
+			animation: 2s color;
+		}
+		#box .hide{
+			animation: 1s hide;
+			transform: rotateX(-120deg);
+		}
+		#btn{
+			position: absolute;
+			top:0;
+			left: 0;
+			width: 80px;
+			height: 30px;
+			font-size: 20px;
+		}
+	</style>
+	<script>
+	window.onload=function(){		
+		var oBtn=document.getElementById('btn');
+		var oBox=document.getElementById('box');
+		var aDiv=oBox.getElementsByTagName('div');
+		var len=aDiv.length;
+		var flag=true;
+		var idx=0;
+		var timer=null;
+		oBtn.onclick=function(){
+			if(timer){
+				clearInterval(timer);
+			}
+			if(flag){
+				timer=setInterval(function(){
+					aDiv[idx].className='show';
+					idx++;
+					if(idx>len-1){
+						clearInterval(timer);
+						timer=null;
+						idx=len-1;
+						flag=false;	
+					}
+				},100);	
+				oBtn.value='关闭';				
+			}else{
+				timer=setInterval(function(){
+					aDiv[idx].className='hide';
+					idx--;
+					if(idx<0){
+						clearInterval(timer);
+						timer=null;
+						idx=0;
+						flag=true;
+					}
+					// console.log(1);
+				},80);	
+				oBtn.value='展开';	
+			}	
+		}
+	}
+	</script>
+</head>
+<body>
+	<div id="box">
+		<h2>我是标题</h2>
+		<div>
+			<span>选项一</span>
+			<div>
+				<span>选项二</span>
+				<div>
+					<span>选项三</span>
+					<div>
+						<span>选项四</span>
+						<div>
+							<span>选项五</span>
+							<div>
+								<span>选项六</span>
+								<div>
+									<span>选项七</span>
+									<div>
+										<span>选项八</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<input type="button" id="btn" value="展开">
+</body>
+</html>

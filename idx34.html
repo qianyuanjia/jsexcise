@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>简易祖玛小游戏</title>
+	<style>
+		body{
+			background: #000;
+		}
+		#box{
+			background: #fff;
+			margin:30px auto;
+			width: 600px;
+			height: 600px;
+		}
+	</style>
+	<script>
+		window.onload=function(){
+			var oCan=document.getElementById('can');
+			var oCtx=oCan.getContext('2d');
+			var balls=[];
+			var bullets=[];
+			var speed=5;
+			var degree=0;
+			var img=new Image();
+			img.src='img/frog.png';
+			img.onload=function(){
+				setInterval(function(){
+					oCtx.clearRect(0,0,oCan.width,oCan.height);
+					oCtx.beginPath();
+					oCtx.arc(300,200,200,-90*Math.PI/180,180*Math.PI/180,false);
+					oCtx.arc(250,200,150,180*Math.PI/180,360*Math.PI/180,false);
+					oCtx.moveTo(420,200);
+					oCtx.arc(400,200,20,0,360*Math.PI/180,false);
+					oCtx.stroke();
+
+					for(var i=0;i<balls.length;i++){				
+						if(balls[i].num==270){
+							balls[i].r=150;
+							balls[i].x=250;
+							balls[i].y=50;
+						}else if(balls[i].num==270+180){
+							alert("游戏结束");
+							window.location.reload();
+						}
+						balls[i].cirX=balls[i].x+balls[i].r*Math.sin(balls[i].num*Math.PI/180);
+						balls[i].cirY=balls[i].y+balls[i].r-balls[i].r*Math.cos(balls[i].num*Math.PI/180);
+						oCtx.beginPath();
+						oCtx.arc(balls[i].cirX,balls[i].cirY,20,0,360*Math.PI/180,false);
+						oCtx.closePath();
+						oCtx.fill();
+						balls[i].num++;
+					}
+
+					
+
+					for(var i=0;i<bullets.length;i++){
+						bullets[i].cirX=300+bullets[i].sX*bullets[i].num;
+						bullets[i].cirY=200+bullets[i].sY*bullets[i].num;
+						if(bullets[i].cirX<0 || bullets[i].cirX>oCan.width || bullets[i].cirY<0 || bullets[i].cirY>oCan.height){
+							bullets.splice(i,1);
+							break;
+						}
+						for(var j=0;j<balls.length;j++){
+							if(isTouch(bullets[i].cirX,bullets[i].cirY,20,balls[j].cirX,balls[j].cirY,20)){
+								balls.splice(j,1);
+								bullets.splice(i,1);
+								break;
+							}
+						}
+						
+					}
+					for(var i=0;i<bullets.length;i++){
+						oCtx.save();
+						oCtx.fillStyle='red';
+						oCtx.beginPath();
+						oCtx.arc(bullets[i].cirX,bullets[i].cirY,20,0,360*Math.PI/180,false);
+						oCtx.fill();
+						oCtx.restore();
+						bullets[i].num++;
+					}
+
+					drawFrog();
+
+					oCtx.save();
+					var textH=50;
+					oCtx.font=textH+'px impact';
+					oCtx.textBaseline='top';
+					oCtx.shadowOffsetX=3;
+					oCtx.shadowOffsetY=3;
+					oCtx.shadowBlur=3;
+					oCtx.shadowColor='gray';
+					var textW=oCtx.measureText('简易祖玛小游戏').width;
+					oCtx.fillText('简易祖玛小游戏',(oCan.width-textW)/2,400+(200-textH)/2);
+					oCtx.restore();
+
+				},1000/60);
+
+
+				setInterval(function(){
+					balls.push({
+						x:300,
+						y:0,
+						r:200,
+						num:0
+					});
+				},300);
+			}
+			oCan.onmousemove=function(ev){
+				var ev=ev || window.event;
+				var x=ev.clientX-oCan.offsetLeft;
+				var y=ev.clientY-oCan.offsetTop;
+				var a=Math.abs(x-300);
+				var b=Math.abs(y-200);
+				if(x>=300 && y<200) degree=Math.atan(a/b);
+				else if(x>300 && y>=200) degree=Math.atan(b/a)+90*Math.PI/180;
+				else if(x<=300 && y>200) degree=Math.atan(a/b)+180*Math.PI/180;
+				else if(x<300 && y<=200) degree=-Math.atan(a/b);
+			}
+
+			function drawFrog(){
+				oCtx.save();
+				oCtx.translate(300,200);
+				oCtx.rotate(degree);
+				oCtx.translate(-img.width/2,-img.height/2);
+				oCtx.drawImage(img,0,0);
+				oCtx.restore();
+			}
+			oCan.onclick=function(ev){
+				var ev=ev || window.event;
+				var x=ev.clientX-oCan.offsetLeft;
+				var y=ev.clientY-oCan.offsetTop;
+				var a=Math.abs(x-300);
+				var b=Math.abs(y-200);
+				var deg=Math.atan(a/b);
+				if(x>=300 && y<200){
+					bullets.push({
+						sX:speed*Math.sin(deg),
+						sY:-speed*Math.cos(deg),
+						num:0
+					});
+				}
+				else if(x>300 && y>=200){
+					bullets.push({
+						sX:speed*Math.sin(deg),
+						sY:speed*Math.cos(deg),
+						num:0
+					});
+				}
+				else if(x<=300 && y>200){
+					bullets.push({
+						sX:-speed*Math.sin(deg),
+						sY:speed*Math.cos(deg),
+						num:0
+					});
+				}
+				else if(x<300 && y<=200){
+					bullets.push({
+						sX:-speed*Math.sin(deg),
+						sY:-speed*Math.cos(deg),
+						num:0
+					});
+				}
+				
+			}
+			function isTouch(x1,y1,r1,x2,y2,r2){
+				var disX=Math.abs(x1-x2);
+				var disY=Math.abs(y1-y2);
+				var dis=Math.sqrt(disX*disX+disY*disY);
+				if(dis<r1+r2) return true;
+			}
+
+
+		}
+	</script>
+</head>
+<body>
+<div id="box">
+	<canvas id="can" width="600" height="600"></canvas>
+</div>		
+</body>
+</html>
