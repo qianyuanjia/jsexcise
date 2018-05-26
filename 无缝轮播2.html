@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+	<meta charset="UTF-8">
+	<title>无缝轮播</title>
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+	<style>
+		body{
+			margin:0;
+		}
+	
+		.pics{
+			width: 430px;
+			padding: 0;
+			list-style: none;
+			position: relative;
+			height: 240px;
+			margin: 100px auto;
+			overflow: hidden;
+		}
+		
+		.pics li{
+			position:absolute;
+			transition: all 1s;
+		}
+		.clearfix::after{
+			content: '';
+			display: block;
+			clear: both;
+		}
+		.pics li.current{
+			z-index: 1;
+			transform: translateX(0);
+		}
+		.pics li.left{
+			z-index: 1;
+			transform: translateX(-100%);
+			opacity: 0;
+		}
+		.pics li.right{
+			transform: translateX(100%);
+		}
+	</style>
+</head>
+<body>
+	<ul class="pics">
+		<li><img src="./img/qyj1.jpg" alt="图片" width="430" height="240"></li>
+		<li><img src="./img/qyj2.jpg" alt="图片" width="430" height="240"></li>
+		<li><img src="./img/qyj3.jpg" alt="图片" width="430" height="240"></li>
+		<li><img src="./img/qyj4.jpg" alt="图片" width="430" height="240"></li>
+	</ul>
+	<script>
+		init();
+		let n=0;
+		setInterval(()=>{
+			if(n===3){
+				moveEnd();
+				n=0;
+				return;
+			}
+			$(`.pics>li:eq(${n})`).removeClass('current right').addClass('left');
+			$(`.pics>li:eq(${n+1})`).removeClass('right left').addClass('current');
+			$(`.pics>li:eq(${n})`).one('transitionend',(ev)=>{
+				$(ev.currentTarget).removeClass('left current').addClass('right');
+			})
+			n++;
+		},2000);
+		function init(){
+			$('.pics>li:eq(0)').addClass('current').siblings().addClass('right');
+		}
+		function moveEnd(){
+			$('.pics>li:eq(0)').removeClass('left right').addClass('current').siblings().last().removeClass('current left').addClass('left').one('transitionend',(ev)=>{
+				$(ev.currentTarget).removeClass('left current').addClass('right');
+			});
+		}
+	</script>
+</body>
+</html>
